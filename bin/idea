@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+CMD = ARGV[0]
+require './lib/ideapad'
+include Ideapad
+
+list = IdeaList.load!
+
+# error and exit
+def ee(msg)
+  $stderr.puts "An error occurred: #{msg}"
+  exit 1
+end
+
+def halp!
+  msg = []
+  msg << "Usage: idea [command] [args]"
+  msg << "Commands: add, list, size, pop"
+  msg << ""
+  msg << ""
+  msg << "Adding an idea: `idea add this is the body of my idea. no quotes required, though, recommended.`"
+  msg << "Listing ideas:  `idea list`"
+  msg << "Remove the last idea: `idea pop`"
+
+  puts msg.join("\n")
+end
+
+case CMD.downcase
+when 'help'
+  halp!
+when 'list', 'l'
+  list.pretty
+when 'add', 'a'
+  idea = ARGV[1..-1]
+  if idea.nil? || idea == []
+    ee "idea required"
+  end
+  idea = idea.join(" ")
+
+  list.add_idea idea
+  list.pretty
+when 'size', 'num'
+  puts list.size
+when 'pop'
+  list.pop
+  list.pretty
+else
+  halp!
+end
