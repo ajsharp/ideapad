@@ -56,7 +56,6 @@ module Ideapad
     # IdeaList instance
     def self.load!
       if File.exist?(db)
-        save
         new Marshal.load(File.read(db))
       else
         new
