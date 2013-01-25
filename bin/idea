@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 
 CMD = ARGV[0]
-require './lib/ideapad'
+begin
+  require 'ideapad'
+rescue LoadError
+  require File.dirname(__FILE__) + '/../lib/ideapad'
+end
+
 include Ideapad
 
 list = IdeaList.load!
