@@ -29,9 +29,9 @@ def halp!
 
   puts msg.join("\n")
 end
-
-case CMD.downcase
-when 'help'
+cmd = CMD || ''
+case cmd.downcase
+when 'help', ''
   halp!
 when 'list', 'l'
   list.pretty
